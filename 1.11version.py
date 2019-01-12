@@ -125,10 +125,10 @@ def callback(self, move_cmd):
     wtheta2 = (sina * vy + cosa * vx + w * L) / r     #Vb
     wtheta3 = (-vy + w * L) / r    #Vc
     
-    rads18000 = 83 * 2 * math.pi / 60 #8.691739674931762 rad/s  设置为18000对应的轮子角速度
+    rads18000 = 83 * 2 * math.pi / 60 #8.691739674931762 rad/s  设置为18000对应的轮子角速度(18000的时候轮子圈数为83)
     
     k1 = int(wtheta1 * 18000 / rads18000) #速度wtheta1对应的设置值
-    k2 = int(wtheta2 * 18000 / rads18000) 
+    k2 = int(wtheta2 * 18000 / rads18000) #对应的脉冲值
     k3 = int(wtheta3 * 18000 / rads18000)
     
     if k1 > 18000:
@@ -209,8 +209,8 @@ def talker(self):
                     angle = math.pi / 6
                     sina = 0.5 #math.sin(angle)
                     cosa = math.cos(angle)
-                    tt = (wtheta1 + wtheta2 - 2 * wtheta3) / (2 + 2 * sina)
-                    self.vx = self.radius * (wtheta2 - wtheta1) / ( 2 * cosa)
+                    tt = (wtheta1 + wtheta2 - 2 * wtheta3) / (2 + 2 * sina)  #逆矩阵
+                    self.vx = self.radius * (wtheta2 - wtheta1) / ( 2 * cosa) 
                     self.vy = self.radius * tt
                     self.vth = (wtheta3 + tt) * self.radius / self.L
                     if (self.vx != 0) or (self.vy != 0):
